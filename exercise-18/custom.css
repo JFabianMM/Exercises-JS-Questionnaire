@@ -1,0 +1,100 @@
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+  /* background-color: rgb(241, 240, 251); */
+  width:90%;
+  /* height: 440px; */
+  margin:50px auto; 
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.cont {
+  border: 1px solid rgb(128, 128, 129);
+  background-color: rgb(232, 235, 235);
+  height: 40px;
+  flex-basis: 25%;
+  text-align: center;
+  align-content: center;
+  line-height: 40px;
+}
+
+.p1 {
+  border: 1px solid rgb(128, 128, 129);
+  background-color: rgb(232, 235, 235);
+  height: 40px;
+  flex-basis: 12.5%;
+  text-align: center;
+  align-content: center;
+  line-height: 40px;
+}
+.p2 {
+  border: 1px solid rgb(128, 128, 129);
+  background-color: rgb(232, 235, 235);
+  height: 40px;
+  flex-basis: 12.5%;
+  text-align: center;
+  align-content: center;
+  line-height: 40px;
+}
+
+/* #container{
+  width: 100%;
+} */
+
+/* table {
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+#add:hover {
+  color: rgb(181, 173, 173);
+  cursor:pointer;
+}
+
+.edit{
+  margin: 0; 
+  display: inline;
+}
+.edit:hover {
+  color: rgb(181, 173, 173);
+  cursor:pointer;
+}
+
+.delete {
+  margin: 0; 
+  display: inline;
+}
+
+.delete:hover {
+  color: rgb(181, 173, 173);
+  cursor:pointer;
+}
+
+th, td {
+  text-align: left;
+  padding: 16px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2
+}
+ */

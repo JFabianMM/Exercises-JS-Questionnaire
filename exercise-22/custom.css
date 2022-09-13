@@ -1,0 +1,31 @@
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#btn {
+  width: 200px;
+  height: 40px;
+  position: relative;
+  /* background: rgb(224, 224, 195); */
+  margin-bottom: 20px;
+}
+#div {
+  width: 200px;
+  height: 40px;
+  position: relative;
+  background-color: rgb(163, 170, 247);
+  border-radius: 5px;
+  text-align: center;
+  line-height: 40px;
+}

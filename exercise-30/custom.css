@@ -1,0 +1,25 @@
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+p {
+  width: 220px;
+  height: 40px;
+  position: relative;
+  margin-left: 100px;
+  margin-top: 10px;
+  background-color: rgb(177, 178, 195);
+  text-align: center;
+  line-height: 40px;
+}
