@@ -10,7 +10,7 @@
 
 
 function months(str){
-    let arr=['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'Nomember', 'December'];
+    let arr=['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     let arr2 = str.split(" ");
     let len = arr2.length;
     let newArr=[];

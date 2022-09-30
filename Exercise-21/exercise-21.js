@@ -32,7 +32,7 @@ for(let i = 0; i < 5; ++i){
 // counter:  3
 // counter:  4
 
-var obj = {
+let obj = {
   prop: {}
 };
 delete obj.prop;

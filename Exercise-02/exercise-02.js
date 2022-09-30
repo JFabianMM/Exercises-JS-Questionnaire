@@ -5,6 +5,7 @@
 
 // Reverse a string in JavaScript (1 hours)
 // Do not use split.reverse.join
+
 // Create an instance method for all strings that returns the reversed string
 
 // "hello world".reverse(); // ldrow olleh
@@ -14,38 +15,34 @@
 
 // 	"hello world".reverseWords(); // olleh ldrow
 
-function reverse(str) {
+function reverse() {
+    let string=this;
     let newStr = "";
-    for (let i = str.length - 1; i >= 0; i--) { 
-        newStr += str[i]; 
+    for (let i = string.length - 1; i >= 0; i--) { 
+        newStr += string[i]; 
     }
     return newStr; 
 } 
-console.log(reverse('hello world'));  // dlrow olleh
 
-function reverseWorlds(str) {
-    const space = ' ';
-    const index = [...str.matchAll(new RegExp(space, 'g'))].map(a => a.index);
-    let newStr = "";
-    let len = index.length;
-    let posFinal=0;
-    for (let i=0;i<=len;i++){
-        if (i==len){
-            posInitial=str.length-1;
-        }else{
-            posInitial=index[i]-1;
-        }
-        for (let ii = posInitial; ii >= posFinal; ii--) { 
-                newStr += str[ii];
-        }
-        if (i<len) newStr += ' ';
-        posFinal=index[i]+1;
+Object.defineProperty(String.prototype, 'reverse', {
+    value: reverse
+})
+
+function reverseWords() {  
+    let str =this;
+    let words = str.match(/\S*/g)
+    let newWord='';
+    let len = words.length;
+    for (let i=0;i<len-1;i++){
+        if ((words[i]!='') && (i==0) ) newWord=words[i].reverse();
+        if ((words[i]!='') && (i>0) ) newWord=newWord + ' ' +words[i].reverse();
     }
-    return newStr; 
+    return newWord; 
 } 
-console.log(reverseWorlds('hello world'));     // olleh dlrow
+Object.defineProperty(String.prototype, 'reverseWords', {
+    value: reverseWords
+})
 
-
-
-
-
+let str='hello beautifull world';
+console.log(str.reverse());
+console.log(str.reverseWords());

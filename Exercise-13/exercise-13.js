@@ -12,7 +12,6 @@ Date.prototype.nextDay = function(){
 }
 
 let date = new Date(); 
-date; 
 
 console.log(date)            
 console.log(date.nextDay())

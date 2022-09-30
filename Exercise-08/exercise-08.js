@@ -14,18 +14,13 @@
 
 function orderArr(arr){
      let len= arr.length;
-     let cont=0;
-     let val=0;
      for (let i=0; i<len; i++){
-         val= arr.shift();
-         if (val>0){
-            arr.push(val)
-         }else{
-          cont++;
-         }
-     }
-     for (let i=0; i<cont; i++){
-         arr.push(0);
+        if (arr[i]==0){
+            arr.splice(i, 1);
+            i--;
+            len--;
+            arr[arr.length]=0;
+        }
      }
      return arr;
 }

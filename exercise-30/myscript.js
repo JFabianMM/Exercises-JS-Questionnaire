@@ -5,22 +5,18 @@
 // - When the first <p> of each pair  is clicked, it will toggle show/hide the second <p>
 // - May be created using vanilla javascript or jQuery
 
-let parentElement=document.querySelector('body');
-
-let even = document.querySelectorAll("p:nth-child(even)");
-let odd = document.querySelectorAll("p:nth-child(odd)");
-for (let i of even) {
-    i.style.visibility = "hidden";
-}
+let divElement = document.querySelector('div');
+let odd = document.querySelectorAll('p');
 for (let i of odd) {
-    i.addEventListener("click", function(){
-        let index = Array.from(parentElement.children).indexOf(this);
-        let element=parentElement.children[index+1];
-        let attributeValue = element.getAttribute('style','visibility');
-        if (attributeValue=='visibility: visible;'){
-            element.style.visibility = "hidden";
-        }
-        if (attributeValue=='visibility: hidden;'){
-            element.style.visibility = "visible";
-        }
-})}
+    i.style.visibility = "visible";
+}
+divElement.addEventListener("click", function(){
+    let targetElement=event.target;
+    let childIndex = Array.from(targetElement.parentElement.children).indexOf(targetElement);
+    if(childIndex % 2 == 0) {    // chack if is even position
+        let nextElement=targetElement.parentElement.children[childIndex+1];
+        let attributeValue = nextElement.getAttribute('style','visibility');   // Get the current attribute value
+        if (attributeValue=='visibility: visible;') nextElement.style.visibility = "hidden";
+        if (attributeValue=='visibility: hidden;') nextElement.style.visibility = "visible";
+    }
+})

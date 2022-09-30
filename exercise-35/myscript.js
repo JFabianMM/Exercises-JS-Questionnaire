@@ -12,7 +12,7 @@ function sortTableAge() {
     while (switching) {       
         switching = false;                              // Start by saying is not necesary switching again
         rows = table.rows;                              // Get the rows
-        for (i = 1; i < (rows.length - 1); i++) {       // Loop through all table rows (except table headers)
+        for (let i = 1; i < (rows.length - 1); i++) {       // Loop through all table rows (except table headers)
             shouldSwitch = false;                       // Flag to say the rows must not be switched
             x = rows[i].getElementsByTagName("td")[1];  // Get the two rows to be compared, the current and the next one
             y = rows[i + 1].getElementsByTagName("td")[1]; 
