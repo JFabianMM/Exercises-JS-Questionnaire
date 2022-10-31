@@ -9,21 +9,41 @@
 // context of the callback function. Example:
 //          (2 hours)
 
+let req1 = fetch("data1.json");    // One of the four fetch requests
+let req2 = fetch("data2.json");    // One of the four fetch requests
+let req3 = fetch("data3.json");    // One of the four fetch requests
+let req4 = fetch("data4.json");    // One of the four fetch requests
+let req5 = fetch("data5.json");    // One of the four fetch requests
 
-// It would be something like this:
+let arr=[req1,req2,req3,req4,req5];
 
-let urlArray = ["/dev1.json", "/dev2.json", "/dev3.json", "/dev4.json", "/dev5.json"];
-let callback = function() {
-          alert("done");
-    };
-let requests = [];
-let ajaxFunction = function(urlArray, callback) {
-          for(let i = 0; i < urlArray.length; i++) {
-            requests.push($.ajax({
-              url: urlArray[i]
-            }));
-          };
+let printData = function() {      		
+  console.log(this[0]);     // Response of the first fetch
+  console.log(this[1]);     // Response of the second fetch
+  console.log(this[2]);     // Response of the third fetch
+  console.log(this[3]);     // Response of the fourh fetch
+  console.log(this[4]);     // Response of the fifth fetch
 };
-$.when.apply(undefined, requests).then(function(results){
-    callback();
-});
+
+function manage(arr, callback){
+    let len=arr.length;
+    let array=[];
+    let outputArray=[];
+    for (let i = 0; i < len; ++i) {
+        array[i] = "a"+i;
+    }
+    Promise.all(arr).then(async(array) => {
+    for (let i=0;i<len;i++){
+        outputArray[i] = await array[i].json();
+    } 
+        return outputArray
+      })
+      .then((responseText) => {
+            callback.call(responseText);        // The answer is the context of the callback function
+      }).catch((err) => {
+            console.log(err);
+      });
+}
+
+manage(arr,printData);
+

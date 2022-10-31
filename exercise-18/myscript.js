@@ -12,177 +12,167 @@
 // Name	Last Name	Phone	#Add
 // John	Galt	123-456-7890	[edit/delete]
 
-let data=fetch("data.json")
+//- avoid creating global variables (e.g. notes).
+//- the last name and phone fields are all populated with the name of the record.
+//- while editing a cell (last name or phone), hitting the delete key can eventually lead to deleting the cell and breaking the UI.
+
+fetch("data.json")
           .then(response => response.json())
-          .then(data =>  {
-           addValues(data)
-           formTable(data)
+          .then(data =>  { 
+           addValues(data);
           });
 
 function addValues (data){
-    data=data;
-    notes=data;
+    data.forEach((note) => {     
+        insertRows(note.id, note.name, note.lastName, note.phone, data);     
+    });
+    let addElement = document.getElementById('add');
+    addElement.addEventListener('click', function(){
+        addFunction(data);
+    });
 }
 
-function formTable (data){
-      len=data.length;
-
-       data.forEach((note) => {     
-             insertRows(note.id, note.name, note.lastName, note.phone);     
-      });
-}
-
-function insertRows (id, name, lastName, phone){
+function insertRows (id, name, lastName, phone, data, flag=0){
     let container = document.getElementById('container');
-    let element1 = document.createElement("div");
-    element1.classList.add("cont");
-    element1.setAttribute('id','id1');
-    element1.appendChild(document.createTextNode(`${name}`));
-    container.appendChild(element1);
-   
-    let element2 = document.createElement("div");
-    element2.classList.add("cont");
-    element2.setAttribute('id','id2');
-    element2.appendChild(document.createTextNode(`${lastName}`));
-    container.appendChild(element2);
-   
-    let element3 = document.createElement("div");
-    element3.classList.add("cont");
-    element3.setAttribute('id','id3');
-    element3.appendChild(document.createTextNode(`${phone}`));
-    container.appendChild(element3);
-   
-    let element4 = document.createElement("div");
-    element4.classList.add("p1");
-    element4.setAttribute('id','p1');
-    element4.appendChild(document.createTextNode('Edit'));
-    element4.addEventListener('click', function(event){
-       if (event.target.className==='p1'){
-          let child=event.target;
-            let index = Array.from(
-            child.parentElement.children
-            ).indexOf(child);
-            console.log(index); 
-            let parent = child.parentNode;
-            let name = prompt("Please enter the name");
-            let lastName = prompt("Please enter the Last Name");
-            let phone = prompt("Please enter the phone number");
-            nameElement=parent.children[index-3];
-            nameElement.innerHTML = name;
-            lastNameElement=parent.children[index-2];
-            lastNameElement.innerHTML = lastName;
-            phoneElement=parent.children[index-1];
-            phoneElement.innerHTML = phone;
-
-            let targetNote = notes.filter((note) => note.id == id)[0];
-            console.log(targetNote);
-            targetNote.name = name;
-            targetNote.lastName=lastName;
-            targetNote.phone=phone;
-            console.log(notes);
-       } 
-   });
-    container.appendChild(element4);
-    
-    let element5 = document.createElement("div");
-    element5.classList.add("p2");
-    element5.setAttribute('id','p2');
-    element5.appendChild(document.createTextNode('Delete'));
-    element5.addEventListener('click', function(event){
-        if (event.target.className==='p2'){
-                let child=event.target;
-                let index = Array.from(
-                child.parentElement.children
-                ).indexOf(child);
-                console.log(index); 
-                let parent = child.parentNode;
-                parent.removeChild(parent.children[index-4]);
-                parent.removeChild(parent.children[index-4]);
-                parent.removeChild(parent.children[index-4]);
-                parent.removeChild(parent.children[index-4]);
-                parent.removeChild(parent.children[index-4]);
-
-                let targetNote2 = notes.filter((note) => note.id == id)[0];
-                console.log(targetNote2);
-                targetNote2.name = name;
-                targetNote2.lastName=lastName;
-                targetNote2.phone=phone;
-                console.log(notes);
-                notes = notes.filter((note) => note.id != id);
-                console.log(notes);
-        } 
-    });
-    container.appendChild(element5);
-}
-
-function addFunction() {
-        len=notes.length;
-        let id1=0;
-        if (len==0){id1=1;}
-        for (let i=0;i<len;i++){
-            if (notes[i].id >= id1){
-                id1=notes[i].id + 1;
+    for (let i=0;i<3;i++){    
+        let element = document.createElement("div");
+        element.classList.add("cont");    
+        element.setAttribute('contenteditable','false');
+        element.setAttribute('maxlength',10);
+        if (flag==1){
+            element.appendChild(document.createTextNode(''));
+            element.classList.add("selected");
+            element.setAttribute('contenteditable','true');   
+        }else{
+            if (i==0){
+                element.appendChild(document.createTextNode(`${name}`));
             }
+            if (i==1){
+                element.appendChild(document.createTextNode(`${lastName}`));
+            }
+            if (i==2){
+                element.appendChild(document.createTextNode(`${phone}`));
+            }
+        } 
+        container.appendChild(element);
+    }
+    
+    element = document.createElement("div");
+    element.classList.add("p1");
+    element.appendChild(document.createTextNode('Edit'));
+    element.setAttribute('contenteditable','false');
+    element.addEventListener('click', function(event){
+        cleanClass();
+        let child=event.target;
+        let index = Array.from(child.parentElement.children).indexOf(child);
+        let parent = child.parentNode;
+        for (let i=0;i<3;i++){
+            nameElement=parent.children[index-3+i];
+            nameElement.classList.add("selected");
+            nameElement.setAttribute('contenteditable','true');
         }
-        let noteObject = {
-            id: id1,
-            name: " ",
-            lastName: " ",
-            phone: " "
-        };
-        notes.push(noteObject);
-        insertRows(id1, notes.name, notes.lastName, notes.phone);   
+        let targetNote = data.filter((note) => note.id == id)[0];
+        targetNote.name = name;
+        targetNote.lastName=lastName;
+        targetNote.phone=phone; 
+   });
+    container.appendChild(element);
+
+    element = document.createElement("div");
+    element.classList.add("p1");
+    element.appendChild(document.createTextNode('Delete'));
+    element.setAttribute('contenteditable','false');
+    element.addEventListener('click', function(event){
+        cleanClass();
+        child=event.target;
+        index = Array.from(child.parentElement.children).indexOf(child);
+        parent = child.parentNode;
+        for (let j=0;j<5;j++) parent.removeChild(parent.children[index-4]);                
+        targetNote = data.filter((note) => note.id == id)[0];
+        targetNote.name = name;
+        targetNote.lastName=lastName;
+        targetNote.phone=phone;
+        data = data.filter((note) => note.id != id);
+    });
+    container.appendChild(element);
+}
+
+function addFunction(data) {
+    cleanClass();
+    let len=data.length;
+    let id1=0;
+    if (len==0){id1=1;}
+    for (let i=0;i<len;i++){
+        if (data[i].id >= id1){
+            id1=data[i].id + 1;
+        }
+    }
+    let noteObject = {
+        id: id1,
+        name: "",
+        lastName: "",
+        phone: ""
+    };
+    data.push(noteObject);
+    insertRows(id1, noteObject.name, noteObject.lastName, noteObject.phone, data,1);   
+}
+
+function cleanClass(){
+    const elements = document.querySelectorAll(".selected");
+    if (elements.length>0) elements.forEach(element => {
+        element.classList.remove("selected");
+        element.setAttribute('contenteditable','false');
+    });
 }
  
 
+// GET, POST, DELETE, and PUT operations.
 
-// The ajax methods would be like this:
-function requestData() {
-    let request = new XMLHttpRequest();
-    request.onload = function () {
-          console.log(this.responseText);
-    }
-    request.open('GET', 'https://ll.com/get/json', true);
-    request.send();
-}
-
-
-function requestData() {
-let xhr = new XMLHttpRequest();
-xhr.open("GET", "https://reqbin.com/echo/get/json");
-
-
-const url = "https://json.com";
-function sendRequest() {
-    let request = new XMLHttpRequest();
-    request.open('POST', url, true);
-    request.setRequestHeader('Content-type','application/json; charset=UTF-8');
-    request.send(notes);    
- 
-    request.onload = function () {
-        if (request.status === 201) {
-            console.log = "Data posted successfully!";
-        }
-    }
-}
-}
-
-function putRequest() {
-    $.ajax({
-        url: 'data.json',
-        type: 'PUT',
-        success: function (result) {
-            // Do something with the result
-        }
+// GET Operation
+// The GET Method is the same as the Fetch request of line 21. If I had a server only the change
+// in the request would be the URL, for example:
+function getOperation(url){
+   fetch(url) 
+    .then(response => response.json())
+    .then(data =>  {
+    console.log(data);              // I print the data only as an example
     });
 }
 
-function deleteRequest() {
-    $.ajax({
-        url: 'data.json',
-        type: 'DELETE',
-        success: function (result) {
-            // Do something with the result
-        }
-    });
+// POST Operation
+function postOperation(id, name, lastName, phone){
+    fetch("https://example.com/newCandidate",
+    {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({id: id, name: name, lastName: lastName, phone: phone})
+    })
+    .then(function(res){ console.log(res) })   // I print the resul only as an example
+    .catch(function(res){ console.log(res) })  // I print the resul only as an example
+}
+
+// DELETE Operation
+function deleteOperation(url, id){
+    fetch(url + '/' + id, {
+      method: 'DELETE'
+    })
+    .then(response => response.json());        // Only as an example
+}
+
+// PUT Operation
+function putOperation(id, name, lastName, phone){
+    fetch("https://example.com/putCandidate",
+    {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: "PUT",
+        body: JSON.stringify({id: id, name: name, lastName: lastName, phone: phone})
+    })
+    .then(function(res){ console.log(res) })     // I print the resul only as an example
+    .catch(function(res){ console.log(res) })    // I print the resul only as an example
 }

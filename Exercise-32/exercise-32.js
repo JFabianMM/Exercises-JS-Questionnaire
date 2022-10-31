@@ -9,7 +9,7 @@ function myLog() {
        bar: 'bar',
        foo: 'foo',
        prop: function () {
-           var self = this;
+           let self = this;
            console.log(self.bar);
            console.log(this.foo);
            (function() {
@@ -20,7 +20,7 @@ function myLog() {
     };
  }
  
- var obj = myLog();
+ let obj = myLog();
  obj.prop();
 
 // The outpout is:

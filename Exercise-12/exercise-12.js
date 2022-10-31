@@ -12,7 +12,7 @@ function changeTime(date, day, hour){
     date.setHours(currentHours+hour);
     return date;
 }
-var date = new Date();
+let date = new Date();
 console.log(changeTime(date, 0, 0))            
 console.log(changeTime(date, 1, 1))
 

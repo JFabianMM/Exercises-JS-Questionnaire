@@ -10,24 +10,21 @@
 // Do not use splice
 
 // Input: [2,0,4,5,0,2,0,0,3]
-// Output: [2,4,5,2,3,0,0,0,0]            
+// Output: [2,4,5,2,3,0,0,0,0]      
 
 function orderArr(arr){
-     let len= arr.length;
-     let cont=0;
-     let val=0;
-     for (let i=0; i<len; i++){
-         val= arr.shift();
-         if (val>0){
-            arr.push(val)
-         }else{
-          cont++;
-         }
-     }
-     for (let i=0; i<cont; i++){
-         arr.push(0);
-     }
-     return arr;
+    let len= arr.length;
+    for (let i=0; i<len; i++){
+       if (arr[i]==0){
+           for (let j=i+1; j<len; j++){
+                if (arr[j]!=0){
+                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                    break;
+                }
+            }
+       }
+    }
+    return arr;
 }
 
-console.log(orderArr([2,0,4,5,0,2,0,0,3]));
+console.log(orderArr([0,2,0,4,5,0,2,0, 7,0,0,3]));
