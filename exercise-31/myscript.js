@@ -5,19 +5,21 @@
 // Modify the previous exercise so that only the 
 // clicked <p> is shown. All others should be hidden. (1 hours)    
 
-let parentElement=document.querySelector('body');
-
+let divElement = document.querySelector('div');
 let even = document.querySelectorAll("p:nth-child(even)");
-let odd = document.querySelectorAll("p:nth-child(odd)");
 for (let i of even) {
     i.style.visibility = "hidden";
 }
-for (let i of odd) {
-    i.addEventListener("click", function(){
-        let index = Array.from(parentElement.children).indexOf(this);
-        let element=parentElement.children[index+1];
+divElement.addEventListener("click", function(){
+     let targetElement=event.target;
+     let childIndex = Array.from(targetElement.parentElement.children).indexOf(targetElement);
+     if(childIndex % 2 == 0) {    // chack if is even position
+        let nextElement=targetElement.parentElement.children[childIndex+1];
+        let attributeValue = nextElement.getAttribute('style','visibility');   // Get the current attribute value
         for (let i of even) {
-            i.style.visibility = "hidden";
+             i.style.visibility = "hidden";
         }
-        element.style.visibility = "visible";
-})}
+        if (attributeValue=='visibility: visible;') nextElement.style.visibility = "hidden";
+        if (attributeValue=='visibility: hidden;') nextElement.style.visibility = "visible";
+     }
+})

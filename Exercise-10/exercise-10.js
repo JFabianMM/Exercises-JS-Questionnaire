@@ -9,14 +9,27 @@
 // - Pass name, last name and specialty as parameters
 // - Write an ajax GET request that sends data from the Person object
 
-  
-  function Person(first_name,last_name) {                                         // Shape is the root constructor with (name, getName(), clone())
+// LAST COMMENT
+// 10) Person object
+// - You are not passing the data as one would expect for a GET request. 
+//   Make use of the built in data types to achieve this
+
+function Person(first_name,last_name) {                                         // Shape is the root constructor with (name, getName(), clone())
     this.first_name = first_name; 
     this.last_name = last_name;
   }
-  Person.prototype.getName = function() {       
-    return [this.first_name, this.last_name];
+  Person.prototype.getName = function() { 
+    return this.first_name + ' ' + this.last_name;      
   }
+
+  Person.prototype.getRequest = function() {
+      let URL=`/test/accessName=${this.first_name}${this.last_name}`; // As example
+      return fetch(URL)
+      .then((response) => response.json())    // In case of receiving a response      
+      .then(data => {
+        console.log(data);                    // This is only as example.
+      });
+    }
 
   Person.prototype.clone = function(first_name,last_name) {   // Is added the constructor
     return new this.constructor(first_name,last_name);
@@ -27,53 +40,25 @@
     this.spaeciality=specialty;
   }
   
-  Medic.prototype = Object.create(Person.prototype);           // Is copied the prototype
-  Medic.prototype.constructor = Medic;                     // The constructor is changed 
+  Medic.prototype = Object.create(Person.prototype);          // Is copied the prototype
+  Medic.prototype.constructor = Medic;                        // The constructor is changed 
   
   Medic.prototype.clone = function(first_name,last_name, specialty) {   // Is added the constructor
     return new this.constructor(first_name,last_name, specialty);
   }
   
-  var person1 = new Person('Antony', 'Perez');      // Is created by the Medic constructor
-  console.log(person1.getName())               // Method getName
-  var person2 = new Person('Javier', 'Avilez');      // Is created by the Medic constructor
+  let person1 = new Person('Antony', 'Perez');        // Is created by the Medic constructor
+  console.log(person1.getName())                      // Method getName
+  let person2 = new Person('Javier', 'Avilez');       // Is created by the Medic constructor
   console.log(person2.getName())         
-  var person3 = person2.clone('Alise', 'Guterrez');      // Is created and instance of Medic
+  let person3 = person2.clone('Alise', 'Guterrez');   // Is created and instance of Medic
   console.log(person3.getName()) 
 
-  var medic1 = new Medic('Jesus', 'Mendoza', 'Cardiologist');      // Is created by the Medic constructor
-  var medic2 = medic1.clone('Jose', 'Smith', 'Surgeon');      // Is created and instance of Medic
+  let medic1 = new Medic('Jesus', 'Mendoza', 'Cardiologist'); // Is created by the Medic constructor
+  let medic2 = medic1.clone('Jose', 'Smith', 'Surgeon');      // Is created and instance of Medic
   
   console.log(medic1 instanceof Medic)        // Only to confirm that the constructor is Medic
   console.log(medic1.getName())               // Method getName
-  console.log(medic2.getName())              // Method getName
+  console.log(medic2.getName())               // Method getName
 
-  
-// The ajax reques would be like this:
-
-//   let request = new XMLHttpRequest();
-//   function requestData() {
-//       request.onload = function () {
-//           console.log(this.responseText);
-//       }
-//       request.open('GET', 'object.json', true);
-//       request.send();
-//   }
-
-// let data = JSON.stringify(medic2);       // As example of an object
-
-// const url = "https://json.com";
- 
-// function sendRequest() {
-//     let request = new XMLHttpRequest();
-//     request.open('POST', url, true);
-//     request.setRequestHeader('Content-type','application/json; charset=UTF-8');
-//     request.send(data);
- 
-//     request.onload = function () {
-//         if (request.status === 201) {
-//             console.log = "Data posted successfully!";
-//         }
-//     }
-// }
-
+  medic1.getRequest().then(response => console.log(response));

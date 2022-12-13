@@ -5,7 +5,7 @@
 // Given the following markup and the previous candidate object: (1 hour).
 // - Select the second div with class info    
 // - Insert the candidate’s first name into that div’s first child
-// - Insert the full name into the second div using the printName method            
+// - Insert the full name into the second div using the printName method  
 
 let candidate = {
     name: {
@@ -18,9 +18,9 @@ let candidate = {
       return this.name.firstname + ' ' + this.name.lastname;
   }
 
-let elementInfo2 = document.querySelectorAll('.info')[1];
-elementInfo2.firstChild.textContent = `${candidate.name.firstname}`; 
-elementInfo2.lastElementChild.textContent = `${candidate.printName()}`;
+let elementInfo = document.querySelector('#body .info');
+elementInfo.firstChild.textContent = `${candidate.name.firstname}`; 
+elementInfo.lastElementChild.textContent = `${candidate.printName()}`;
 
 
 

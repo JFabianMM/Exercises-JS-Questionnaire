@@ -11,11 +11,11 @@
 //   [1,2,3,4,5,6,7,8,9]
 
 const flatten = (nested) => {
-  const flat = [];
-  const handleFlat = (array) => {
+  let flat = [];
+  let handleFlat = (array) => {
     let counter = 0
     while (counter < array.length) {
-      const val = array[counter];
+      let val = array[counter];
       if (Array.isArray(val)) {
         handleFlat(val);
       } else {

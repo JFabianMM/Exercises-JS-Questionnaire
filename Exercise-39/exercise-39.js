@@ -7,27 +7,36 @@
 // - 1234
 // - qwert
 // - asdf
-// - 4 or more consecutive characters on the keyboard     
+// - 4 or more consecutive characters on the keyboard  
+
+// LAST COMMENT
+// 39) String validation
+// - using a regular expression seems unnecessary and error prone. 
+//     - consider the input “asd+”
+//     - consider using indexOf instead
 
 const prompt = require("prompt-sync")();
 function validate(str) {  
-    let keyboard = "1234567890qwertyuiopasdfghjklñzxcvbnm";
-    let newStr; 
     let len= str.length;
-    if (len>3){
-        for (let i=0;i<=len-4;i++){
-            newStr="";
-            for (let ii=0; ii<4; ii++){
-                newStr += str[i+ii];
-            }         
-            if (keyboard.match(new RegExp(newStr))){
-                throw 'Input not valid';
+    let lenChart;
+    let keyboard= ["qwertyuiop", "asdfghjklñ", "zxcvbnm","mnbvcxz","ñlkjhgfdsa","poiuytrewq","1234567890", "0987654321"];
+    function validation(sequence){
+        lenChart=sequence.length;
+        if (len>3){
+            for (let i=0;i<lenChart;i++){
+                sum=0;
+                for (let ii=0; ii<len; ii++) {
+                    if (str.charAt(ii) != sequence.charAt(i+ii)){ break; }
+                    sum++;         
+                    if (sum==4) throw new Error ('Input not valid');
+                }        
             }
-        }        
+        }   
     }
-  }
-  let keyword = prompt("Input a string: ");
-  validate(keyword);
+    keyboard.forEach(element => validation(element));    
+}
+let str = prompt("Input a string: ");
+validate(str);
 
 
 

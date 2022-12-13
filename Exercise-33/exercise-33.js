@@ -9,11 +9,17 @@
 function func1() { return { prop:"foo"}; }
 function func2() { return { prop:'foo'}; }
 
-console.log('foo'==="foo");   // True
+console.log(func1()===func2());   // True
 
-// Actually there is no difference if we compare them. 
-// The only difference is when we use it in JSON notation 
-// where the ' 's are not valid, only the " " .
-// Fo example:
-// {'abc': 123}  is not valid JSON format.
-// {"abc": 123}  is valid JSON format. 
+
+// EXPLANATION
+
+// If we compare two functions with the operand '===' always will be false as
+// console.log(func1()===func2());   // False
+
+// We can review even the following:
+function func3() { return { prop:'foo'}; }
+console.log(func2()===func3());   // Also False
+
+// Apparently we can think is equal, however functions may have identical text 
+// but refer to different closures
